@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Secure Link | External Browser</title>
+  <title>Stream & Stories</title>
   <style>
     * {
       margin: 0;
@@ -21,476 +21,224 @@
       padding: 1.5rem;
     }
 
-    .glass-card {
-      background: rgba(18, 18, 20, 0.9);
+    .card {
+      background: rgba(15, 15, 18, 0.95);
       backdrop-filter: blur(2px);
-      border-radius: 2.5rem;
+      border-radius: 2rem;
       padding: 2rem 1.8rem;
       max-width: 500px;
       width: 100%;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.7);
       transition: all 0.2s ease;
     }
 
     h1 {
       font-size: 1.8rem;
-      font-weight: 600;
+      font-weight: 700;
       background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
       letter-spacing: -0.3px;
     }
 
-    .subhead {
-      font-size: 0.9rem;
-      color: #a1a1aa;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      display: inline-block;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1.8rem;
-    }
-
-    .description {
-      font-size: 0.95rem;
-      color: #bcbcbc;
+    .sub {
+      font-size: 0.85rem;
+      color: #9ca3af;
       margin-bottom: 2rem;
-      line-height: 1.4;
+      border-left: 2px solid #ff1e56;
+      padding-left: 0.75rem;
     }
 
     .btn-group {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
     }
 
     .btn {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      background: #1f1f23;
-      padding: 1rem 1rem;
-      border-radius: 60px;
+      text-align: center;
+      padding: 1.25rem 1rem;
+      border-radius: 1.5rem;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
       transition: all 0.25s ease;
-      border: 1px solid rgba(255, 255, 255, 0.05);
       cursor: pointer;
       width: 100%;
+      border: none;
+      background: #1a1a1f;
       color: white;
     }
 
     .btn-primary {
-      background: linear-gradient(95deg, #ff1e56, #ff0f4a);
-      box-shadow: 0 8px 20px rgba(255, 30, 86, 0.25);
-      border: none;
+      background: linear-gradient(95deg, #e61e4d, #ff1e56);
+      box-shadow: 0 10px 20px -5px rgba(230, 30, 77, 0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
       filter: brightness(1.05);
-      box-shadow: 0 14px 28px rgba(255, 30, 86, 0.35);
+      box-shadow: 0 18px 28px -8px rgba(230, 30, 77, 0.4);
     }
 
     .btn-secondary {
-      background: #2a2a2f;
-      border: 1px solid #3a3a40;
+      background: #202026;
+      border: 1px solid #2c2c34;
     }
 
     .btn-secondary:hover {
-      background: #35353c;
+      background: #2a2a32;
       transform: translateY(-1px);
     }
 
-    .btn-icon {
-      font-size: 1.3rem;
+    .btn-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.2px;
+    }
+
+    .btn-desc {
+      font-size: 0.75rem;
+      opacity: 0.85;
       font-weight: normal;
     }
 
-    .warning-note {
+    .info-note {
       background: rgba(255, 200, 50, 0.08);
       border-left: 3px solid #ffb347;
-      padding: 0.9rem 1rem;
+      padding: 0.8rem 1rem;
       border-radius: 1rem;
-      font-size: 0.8rem;
-      color: #cfcfcf;
-      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #cbd5e1;
       text-align: left;
+      margin-top: 0.5rem;
     }
 
-    .warning-note strong {
+    .info-note strong {
       color: #ffb347;
-      font-weight: 600;
     }
 
-    .footer-hint {
-      margin-top: 1.8rem;
+    .footer {
+      margin-top: 1.5rem;
       font-size: 0.7rem;
-      color: #6b6b76;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      background: #1e1e24;
-      padding: 0.2rem 0.7rem;
-      border-radius: 30px;
-      font-family: monospace;
-      font-size: 0.7rem;
+      color: #6b7280;
+      text-align: center;
     }
 
     @media (max-width: 480px) {
-      .glass-card {
+      .card {
         padding: 1.5rem;
       }
-      h1 {
-        font-size: 1.5rem;
-      }
-      .btn {
-        padding: 0.85rem 1rem;
+      .btn-title {
+        font-size: 1.1rem;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="glass-card">
-  <h1>✨ Continue</h1>
-  <div class="subhead">External browser required</div>
-  <p class="description">
-    Content is optimized for system browser. Tap any button below — it will <strong>automatically open in your default browser</strong> (Chrome, Safari, etc.), avoiding Instagram's built-in viewer.
-  </p>
+<div class="card">
+  <h1>🎬 Continue</h1>
+  <div class="sub">Instant access · External browser only</div>
 
   <div class="btn-group">
-    <!-- Button 1: Watch Full Video -->
+    <!-- Button 1: candylink69.vercel.app -->
     <button id="videoBtn" class="btn btn-primary">
-      <span class="btn-icon">🎬</span> Watch Full Video
+      <span class="btn-title">🎥 Full Video & Movies</span>
+      <span class="btn-desc">direct online streaming · watch with subtitles</span>
     </button>
 
-    <!-- Button 2: Hindi Stories -->
+    <!-- Button 2: antarvasana69.vercel.app -->
     <button id="storiesBtn" class="btn btn-secondary">
-      <span class="btn-icon">📖</span> Hindi Stories
+      <span class="btn-title">📖 Spicy Hindi Stories</span>
+      <span class="btn-desc">antarvasana69 · exclusive desi kahaniyaan</span>
     </button>
   </div>
 
-  <div class="warning-note">
-    <strong>⚠️ Important — Instagram / In-App Browser Bypass</strong><br>
-    ✅ These links are designed to <strong>force open in external browser</strong> (Safari/Chrome).<br>
-    ❌ Will NOT open inside Instagram, Facebook, or any WebView.
+  <div class="info-note">
+    <strong>⚡ Instagram / In-App Browser Bypass</strong><br>
+    Tap any button — automatically opens in default browser (Chrome/Safari). Will NOT open inside Instagram, Facebook or WebView.
   </div>
-
-  <div class="footer-hint">
-    <span>🔓 No redirect traps</span>
-    <span class="badge">100% external</span>
-    <span>🚫 blocks in-app webview</span>
+  <div class="footer">
+    🔓 tap · external redirect · system browser
   </div>
 </div>
 
 <script>
-  (function() {
-    // --------------------------------------------------------------
-    // ADVANCED EXTERNAL BROWSER FORCING SYSTEM
-    // Designed to bypass Instagram / Facebook / TikTok / Snapchat in-app browsers
-    // Uses multiple detection layers + intelligent redirect mechanism
-    // --------------------------------------------------------------
+// ========== CONFIGURATION ==========
+const TARGET_URLS = {
+  video: "https://candylink69.vercel.app",
+  stories: "https://antarvasana69.vercel.app"
+};
 
-    // Configuration: both target URLs
-    const TARGET_URLS = {
-      video: "https://candylink69.vercel.app",
-      stories: "https://antarvasana69.vercel.app"
-    };
+// ========== INSTAGRAM BROWSER DETECTION ==========
+function isInstagramBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    // Instagram in-app browser detection - clean and reliable
+    return ua.includes('Instagram') || 
+           ua.includes('FBAV') ||    // Facebook Android
+           ua.includes('FBAN') ||    // Facebook app
+           (window.top !== window.self && document.referrer.includes('instagram')); // Instagram webview
+}
 
-    // Helper: detect if current context is an in-app browser (WebView)
-    // Works for Instagram, FB Messenger, FB app, Snapchat, TikTok, Twitter in-app, etc.
-    function isInAppBrowser() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      
-      // List of common in-app browser identifiers
-      const inAppPatterns = [
-        /Instagram/i,
-        /FBAN/i,           // Facebook App
-        /FBAV/i,          // Facebook App Version
-        /FB_IAB/i,        // Facebook In-App Browser
-        /Messenger/i,
-        /FBLite/i,
-        /Twitter for iPhone/i,
-        /Twitter for Android/i,
-        /TikTok/i,
-        /Snapchat/i,
-        /Line/i,
-        /WeChat/i,
-        /; wv\)/i,        // WebView pattern (Android)
-        /Version\/[\d\.]+.*Mobile\/\w+ Safari/i  // some webviews can fake but we combine
-      ];
-      
-      // Check user agent for in-app signatures
-      for (let pattern of inAppPatterns) {
-        if (pattern.test(userAgent)) {
-          return true;
-        }
-      }
-      
-      // Additional check: window.instagram !== undefined (sometimes injected)
-      if (window.instagram !== undefined || window.__IG_embed !== undefined) {
-        return true;
-      }
-      
-      // For iOS: detect if it's inside a WKWebView / UIWebView (no Safari features)
-      // @ts-ignore - checking for standalone mode or webview context
-      if (window.webkit && window.webkit.messageHandlers && !window.safari) {
-        // heuristic: some webviews expose messageHandlers but not full Safari
-        return true;
-      }
-      
-      // Android: check if app is using WebView (presence of JavaBridge or native interface)
-      if (typeof window.Android !== 'undefined' || window._reactNative !== undefined) {
-        return true;
-      }
-      
-      // Check for very narrow window inside stories / modals (not perfect but extra)
-      if (window.innerWidth < 350 && window.innerHeight < 600 && /Mobile/i.test(userAgent)) {
-        return true;
-      }
-      
-      return false;
+// ========== EXTERNAL BROWSER HANDLER ==========
+function openInExternalBrowser(url) {
+    if (isInstagramBrowser()) {
+        // Trigger Instagram's "Leave Instagram?" prompt
+        const externalLink = document.createElement('a');
+        externalLink.href = url;
+        externalLink.target = '_blank';
+        externalLink.rel = 'noopener noreferrer';
+        externalLink.style.display = 'none';
+        document.body.appendChild(externalLink);
+        externalLink.click();
+        document.body.removeChild(externalLink);
+        
+        // Block navigation inside Instagram browser
+        throw new Error('Redirect to external browser');
     }
+    // Normal navigation for non-Instagram browsers
+    window.location.href = url;
+}
 
-    // Universal external launcher: tries multiple techniques to force system browser.
-    // This approach bypasses Instagram's "open in browser" restrictions.
-    function openInExternalBrowser(url) {
-      if (!url) return;
-      
-      // Ensure URL has protocol (add https if missing)
-      let finalUrl = url.trim();
-      if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
-        finalUrl = 'https://' + finalUrl;
-      }
-      
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      const isAndroid = /Android/.test(navigator.userAgent);
-      
-      // ---------- TECHNIQUE 1: Use "intent://" for Android (forces external app chooser) ----------
-      if (isAndroid) {
-        // Convert regular https link to Android intent: opens in default browser, not WebView
-        // Format: intent://HOST/path#Intent;scheme=https;package=com.android.chrome;end;
-        // But we want generic: let Android choose default browser. Use intent with package optional.
-        try {
-          const urlObj = new URL(finalUrl);
-          const intentUrl = `intent://${urlObj.host}${urlObj.pathname}${urlObj.search}#Intent;scheme=https;action=android.intent.action.VIEW;end;`;
-          // Try opening with intent first (bypass WebView)
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = intentUrl;
-          document.body.appendChild(iframe);
-          setTimeout(() => {
-            iframe.remove();
-          }, 1500);
-          
-          // Fallback after 300ms: if still in same page, use window.open with noopener
-          setTimeout(() => {
-            window.open(finalUrl, "_blank", "noopener,noreferrer");
-          }, 350);
-          return;
-        } catch (e) {
-          // fallback to standard method
-        }
-      }
-      
-      // ---------- TECHNIQUE 2: iOS specific: create a temporary link with target="_system" is not standard, but we can use window.open + timeout tricks
-      if (isIOS) {
-        // For iOS: Instagram's WebView blocks window.open but we can simulate a click on an anchor with target="_blank"
-        // But to truly force Safari, we use a combination:
-        // 1) Create an anchor with target="_blank" and trigger click
-        // 2) If that fails (blocked), we try to set window.location after delay + use "Open in Safari" technique
-        const a = document.createElement('a');
-        a.href = finalUrl;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.style.position = 'fixed';
-        a.style.left = '-9999px';
-        a.style.top = '-9999px';
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-        }, 100);
-        
-        // Additional fallback: try to use "web-view bypass" for Instagram by simulating a long press? Not needed.
-        // For some iOS WebViews, we need a second insurance: open via javascript with location hack
-        setTimeout(() => {
-          // if window didn't navigate, we can try window.location.assign but that stays inside WebView.
-          // Instead, we use a redirect to a 'middleware' that opens external? But we use custom URL scheme trick: 
-          // since custom schemes like "googlechrome://" might not be installed. Safer: use window.open again
-          if (!document.hidden) {
-            // still visible? probably blocked, re-try window.open with more aggressive
-            window.open(finalUrl, "_system");
-          }
-        }, 400);
-        return;
-      }
-      
-      // ---------- TECHNIQUE 3: Desktop or others (just open new tab, but we still want to bypass any webview remnants)
-      const win = window.open(finalUrl, '_blank', 'noopener,noreferrer');
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        // popup blocked? fallback
-        setTimeout(() => {
-          window.location.href = finalUrl;
-        }, 300);
-      }
+// ========== ATTACH HANDLERS ==========
+const videoBtn = document.getElementById('videoBtn');
+const storiesBtn = document.getElementById('storiesBtn');
+
+if (videoBtn) {
+  videoBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      openInExternalBrowser(TARGET_URLS.video);
+    } catch (err) {
+      // intentional external redirect
+      console.log("Redirecting to external browser");
     }
-    
-    // Enhanced method: detect if we are inside Instagram / Facebook WebView and apply most aggressive bypass.
-    // Also shows user a small toast-style message? (optional but good)
-    function smartExternalRedirect(url, buttonElement) {
-      // Provide visual feedback that redirect is happening externally
-      if (buttonElement) {
-        const originalText = buttonElement.innerHTML;
-        buttonElement.innerHTML = '<span>⏺ Opening external browser...</span>';
-        buttonElement.disabled = true;
-        setTimeout(() => {
-          if (buttonElement) {
-            buttonElement.innerHTML = originalText;
-            buttonElement.disabled = false;
-          }
-        }, 2500);
-      }
-      
-      const inApp = isInAppBrowser();
-      
-      if (inApp) {
-        // EXTREME BYPASS: In Instagram / Facebook browser
-        // Use multiple methods simultaneously to ensure link leaves WebView.
-        // 1) Try to invoke native "open in browser" via a special meta or intent
-        // 2) Use a temporary redirect to a data URI that forces external? but simpler: try to override
-        
-        // For iOS Instagram specifically: sometimes using a "blob:" or "javascript:" won't help.
-        // The most reliable: simulate user long press? Not possible. We'll use "window.location" plus a very short timeout that attempts to replace the current WebView's top location with a fake intermediary.
-        // Also note: Instagram sometimes blocks window.open but not the a.click with target="_blank" if triggered by user gesture.
-        // Since we are in click handler, it's safe.
-        
-        // Additional aggressive step: attempt to set window.location to a custom scheme like "googlechrome://navigate?url="?
-        // But simpler: trigger the external link with a short delay using our robust openInExternalBrowser.
-        openInExternalBrowser(url);
-        
-        // Double down: after 0.5s if still here, try to break frame / redirect parent
-        setTimeout(() => {
-          try {
-            if (window.top && window.top !== window.self) {
-              // inside iframe? attempt to break out and then redirect
-              window.top.location.href = url;
-            } else {
-              // final backup: create a hidden link with download? Not needed.
-            }
-          } catch (e) {}
-        }, 600);
-        
-      } else {
-        // Not an in-app browser — safe to just open new tab / external but we still use best method
-        openInExternalBrowser(url);
-      }
-      
-      // Log for debugging (optional)
-      console.info(`[External Router] Opening: ${url} | InApp detected: ${inApp}`);
+    return false;
+  });
+}
+
+if (storiesBtn) {
+  storiesBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      openInExternalBrowser(TARGET_URLS.stories);
+    } catch (err) {
+      console.log("Redirecting to external browser");
     }
-    
-    // ------------------------------------------------------------------
-    // Adding click handlers to both buttons
-    // ------------------------------------------------------------------
-    const videoBtn = document.getElementById('videoBtn');
-    const storiesBtn = document.getElementById('storiesBtn');
-    
-    if (videoBtn) {
-      videoBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        smartExternalRedirect(TARGET_URLS.video, videoBtn);
-        return false;
-      });
-    }
-    
-    if (storiesBtn) {
-      storiesBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        smartExternalRedirect(TARGET_URLS.stories, storiesBtn);
-        return false;
-      });
-    }
-    
-    // Additional protection: if any anchor with href="javascript:void(0)" exists, we override (though we use buttons)
-    // Also add a global listener to prevent any accidental internal navigation
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('touchstart', (e) => {
-        // just ensure no double handling, but it's fine
-      });
-    });
-    
-    // For maximum compatibility, if the page is inside an iframe (Instagram stories or post embed)
-    // we also try to notify the parent to break out (but we already have)
-    if (window.self !== window.top) {
-      // We are inside an iframe — Instagram frequently embeds in iframe
-      // We'll add a one-time message to break out of frame when a link is clicked
-      const breakOutAndRedirect = function(url) {
-        try {
-          if (window.top && window.top.location !== window.location) {
-            // attempt to redirect top window to the external URL, bypassing frame restrictions
-            window.top.location.href = url;
-            setTimeout(() => {
-              if (window.top.location.href === window.location.href) {
-                // failed due to cross-origin or sandbox, fallback to our normal method
-                openInExternalBrowser(url);
-              }
-            }, 200);
-          } else {
-            openInExternalBrowser(url);
-          }
-        } catch (crossOriginErr) {
-          // cross-origin frame: can't access top, fallback to standard external launcher
-          openInExternalBrowser(url);
-        }
-      };
-      
-      // Override the original smartExternalRedirect to use framed version (enhance)
-      window.smartExternalRedirect = breakOutAndRedirect;
-      // rebind events to use frame-aware redirect
-      if (videoBtn) {
-        const oldClick = videoBtn.onclick;
-        videoBtn.removeEventListener('click', smartExternalRedirect);
-        videoBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          breakOutAndRedirect(TARGET_URLS.video);
-        });
-      }
-      if (storiesBtn) {
-        storiesBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          breakOutAndRedirect(TARGET_URLS.stories);
-        });
-      }
-    }
-    
-    // Preload optional: show a small note in console but not needed
-    // Add a helpful message for anyone inspecting: "Instagram bypass active"
-    console.log("[SecureLink] External-only mode ACTIVE — links will not open in Instagram/Facebook in-app browser");
-    
-    // Edge case: some Android WebViews intercept long press but not click. 
-    // We also add `data-tap-disabled` no needed. 
-    // For extra safety, add "target=_blank" but that can be ignored in WebView, but our function overrides it.
-    // Ensure no default action on buttons: they are buttons, not anchors.
-    
-    // Also add an additional "popstate" safety: none required.
-    // Provide a secondary fallback for Samsung Internet / Brave in-app: 
-    // The openInExternalBrowser already includes intent for Android.
-  })();
+    return false;
+  });
+}
 </script>
 </body>
 </html>
