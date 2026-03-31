@@ -1,115 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Access Hub</title>
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container {
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-}
-
-h1 {
-    font-size: 20px;
-    margin-bottom: 30px;
-    opacity: 0.85;
-}
-
-.card {
-    display: block;
-    background: #111;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 15px;
-    text-decoration: none;
-    color: white;
-    transition: 0.3s;
-    border: 1px solid #222;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255,255,255,0.1);
-}
-
-.title {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.subtitle {
-    font-size: 13px;
-    opacity: 0.7;
-    margin-top: 5px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="CandyLink69 - Watch free online movies & videos with subtitles | Antarvasna69 - Exclusive spicy Hindi stories">
+    <title>CandyLink69 | Antarvasna69 - Entertainment Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="logo">
+                <span class="logo-icon">🎬</span>
+                <span class="logo-text">Entertainment Hub</span>
+            </div>
+            <p class="tagline">Your one-stop destination for entertainment</p>
+        </div>
 
-<div class="container">
-    <h1>Tap to Continue</h1>
+        <!-- CandyLink69 Card - Movies & Videos -->
+        <div class="card card-movies">
+            <div class="card-icon">🎥</div>
+            <h2 class="card-title">CandyLink69</h2>
+            <p class="card-description">
+                Watch full movies & videos online with subtitles.<br>
+                Latest releases, classic films, and trending content.
+            </p>
+            <div class="features">
+                <span class="feature">🎬 Full Movies</span>
+                <span class="feature">📝 Subtitles Available</span>
+                <span class="feature">⚡ HD Quality</span>
+                <span class="feature">🆓 Free Streaming</span>
+            </div>
+            <button class="btn btn-primary" data-url="https://candylink69.vercel.app">
+                🍬 Watch Now <span class="external-icon">🔗</span>
+            </button>
+            <p class="btn-note">Opens in your default browser</p>
+        </div>
 
-    <div class="card" onclick="handleClick(event, 'https://candylink69.vercel.app')">
-        <div class="title">Watch Full Movies & Videos</div>
-        <div class="subtitle">Online streaming with subtitles, no download required</div>
+        <!-- Antarvasna69 Card - Spicy Hindi Stories -->
+        <div class="card card-stories">
+            <div class="card-icon">📖</div>
+            <h2 class="card-title">Antarvasna69</h2>
+            <p class="card-description">
+                Exclusive spicy Hindi stories that will keep you hooked.<br>
+                Romance, drama, and exciting narratives.
+            </p>
+            <div class="features">
+                <span class="feature">🔥 Spicy Stories</span>
+                <span class="feature">📖 Hindi Language</span>
+                <span class="feature">✨ Exclusive Content</span>
+                <span class="feature">📱 Read Anywhere</span>
+            </div>
+            <button class="btn btn-secondary" data-url="https://antarvasna69.vercel.app">
+                📚 Read Stories <span class="external-icon">🔗</span>
+            </button>
+            <p class="btn-note">Opens in your default browser</p>
+        </div>
+
+        <!-- Info Footer -->
+        <div class="info-footer">
+            <div class="browser-warning" id="browserWarning" style="display: none;">
+                ⚠️ <strong>Instagram Browser Detected!</strong><br>
+                Tap the <strong>⋯</strong> (three dots) in top-right and select 
+                <strong>"Open in Safari/Chrome"</strong> for best experience.
+            </div>
+            <p class="footer-text">
+                ⚡ All links open in external browser for smooth experience<br>
+                📱 Compatible with all devices
+            </p>
+        </div>
     </div>
 
-    <div class="card" onclick="handleClick(event, 'https://antarvasana69.vercel.app')">
-        <div class="title">Exclusive Hindi Stories</div>
-        <div class="subtitle">Read unique and engaging stories anytime</div>
-    </div>
-</div>
-
-<script>
-function isInstagram() {
-    const ua = navigator.userAgent || "";
-    return ua.includes("Instagram") || ua.includes("FBAN") || ua.includes("FBAV");
-}
-
-function handleClick(e, url) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (isInstagram()) {
-
-        // Strong user gesture external trigger
-        const a = document.createElement("a");
-        a.href = url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        document.body.appendChild(a);
-
-        // Force click
-        a.click();
-
-        document.body.removeChild(a);
-
-        // Backup redirect
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1200);
-
-    } else {
-        window.location.href = url;
-    }
-}
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
