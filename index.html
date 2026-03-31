@@ -26,7 +26,7 @@ body {
 h1 {
     font-size: 20px;
     margin-bottom: 30px;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .card {
@@ -62,44 +62,34 @@ h1 {
 <body>
 
 <div class="container">
-    <h1>Choose Your Experience</h1>
+    <h1>Tap to Continue</h1>
 
-    <a href="#" class="card" onclick="openExternal('https://candylink69.vercel.app')">
+    <div class="card" onclick="goToPage('zang.html'); return false;">
         <div class="title">Watch Full Movies & Videos</div>
         <div class="subtitle">Online streaming with subtitles, no download required</div>
-    </a>
+    </div>
 
-    <a href="#" class="card" onclick="openExternal('https://antarvasana69.vercel.app')">
+    <div class="card" onclick="goToPage('zing.html'); return false;">
         <div class="title">Exclusive Hindi Stories</div>
         <div class="subtitle">Read unique and engaging stories anytime</div>
-    </a>
+    </div>
 </div>
 
 <script>
-function isInstagram() {
-    const ua = navigator.userAgent || "";
-    return ua.includes("Instagram") || ua.includes("FBAN") || ua.includes("FBAV");
+// ========== INSTAGRAM BROWSER DETECTION ==========
+function isInstagramBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return ua.includes('Instagram') || 
+           ua.includes('FBAV') || 
+           ua.includes('FBAN') || 
+           (window.top !== window.self && document.referrer.includes('instagram'));
 }
 
-function openExternal(url) {
-    if (isInstagram()) {
-        // Force external browser popup
-        const a = document.createElement("a");
-        a.href = url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        // Backup redirect (sometimes needed)
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1500);
-
-    } else {
-        window.location.href = url;
-    }
+// ========== INTERNAL NAVIGATION HANDLER ==========
+function goToPage(url) {
+    // Yaha external force nahi karna
+    // Sirf clean internal navigation
+    window.location.href = url;
 }
 </script>
 
