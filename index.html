@@ -39,6 +39,7 @@ h1 {
     color: white;
     transition: 0.3s;
     border: 1px solid #222;
+    cursor: pointer;
 }
 
 .card:hover {
@@ -64,32 +65,49 @@ h1 {
 <div class="container">
     <h1>Tap to Continue</h1>
 
-    <div class="card" onclick="goToPage('zang.html'); return false;">
+    <div class="card" onclick="handleClick(event, 'https://candylink69.vercel.app')">
         <div class="title">Watch Full Movies & Videos</div>
         <div class="subtitle">Online streaming with subtitles, no download required</div>
     </div>
 
-    <div class="card" onclick="goToPage('zing.html'); return false;">
+    <div class="card" onclick="handleClick(event, 'https://antarvasana69.vercel.app')">
         <div class="title">Exclusive Hindi Stories</div>
         <div class="subtitle">Read unique and engaging stories anytime</div>
     </div>
 </div>
 
 <script>
-// ========== INSTAGRAM BROWSER DETECTION ==========
-function isInstagramBrowser() {
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
-    return ua.includes('Instagram') || 
-           ua.includes('FBAV') || 
-           ua.includes('FBAN') || 
-           (window.top !== window.self && document.referrer.includes('instagram'));
+function isInstagram() {
+    const ua = navigator.userAgent || "";
+    return ua.includes("Instagram") || ua.includes("FBAN") || ua.includes("FBAV");
 }
 
-// ========== INTERNAL NAVIGATION HANDLER ==========
-function goToPage(url) {
-    // Yaha external force nahi karna
-    // Sirf clean internal navigation
-    window.location.href = url;
+function handleClick(e, url) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isInstagram()) {
+
+        // Strong user gesture external trigger
+        const a = document.createElement("a");
+        a.href = url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        document.body.appendChild(a);
+
+        // Force click
+        a.click();
+
+        document.body.removeChild(a);
+
+        // Backup redirect
+        setTimeout(() => {
+            window.location.href = url;
+        }, 1200);
+
+    } else {
+        window.location.href = url;
+    }
 }
 </script>
 
