@@ -4,7 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Entertainment Hub</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 30px 24px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card-movies {
+            border-bottom: 4px solid #e74c3c;
+        }
+
+        .card-stories {
+            border-bottom: 4px solid #f39c12;
+        }
+
+        .card-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .card-movies .card-title {
+            color: #e74c3c;
+        }
+
+        .card-stories .card-title {
+            color: #f39c12;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .feature {
+            background: #f0f0f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            color: white;
+            background: #333;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .external-icon {
+            font-size: 14px;
+            margin-left: 6px;
+        }
+
+        .btn-note {
+            font-size: 11px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -13,11 +173,10 @@
                 <span class="logo-icon">🎬</span>
                 <span class="logo-text">Entertainment Hub</span>
             </div>
-            <p class="tagline">Your one-stop destination for entertainment</p>
         </div>
 
         <!-- CandyLink69 Card -->
-        <div class="card card-movies" data-site="candylink" data-url="https://candylink69.vercel.app">
+        <div class="card card-movies" data-url="https://candylink69.vercel.app">
             <div class="card-icon">🎥</div>
             <h2 class="card-title">CandyLink69</h2>
             <p class="card-description">
@@ -33,11 +192,10 @@
             <div class="btn btn-primary">
                 🍬 Watch Now <span class="external-icon">🔗</span>
             </div>
-            <p class="btn-note">Opens in external browser</p>
         </div>
 
         <!-- Antarvasna69 Card -->
-        <div class="card card-stories" data-site="antarvasna" data-url="https://antarvasna69.vercel.app">
+        <div class="card card-stories" data-url="https://antarvasna69.vercel.app">
             <div class="card-icon">📖</div>
             <h2 class="card-title">Antarvasna69</h2>
             <p class="card-description">
@@ -53,14 +211,103 @@
             <div class="btn btn-secondary">
                 📚 Read Stories <span class="external-icon">🔗</span>
             </div>
-            <p class="btn-note">Opens in external browser</p>
-        </div>
-
-        <div class="footer-text">
-            ⚡ All links open in your default browser for best experience
         </div>
     </div>
 
-    <script src="go.js"></script>
+    <script>
+        // ========== INSTAGRAM BROWSER DETECTION (Exactly like your working system) ==========
+        function isInstagramBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            // Instagram in-app browser detection - clean and reliable
+            return ua.includes('Instagram') || 
+                   ua.includes('FBAV') ||    // Facebook Android
+                   ua.includes('FBAN') ||    // Facebook app
+                   (window.top !== window.self && document.referrer.includes('instagram')); // Instagram webview
+        }
+
+        // ========== EXTERNAL BROWSER HANDLER (Exactly like your working system) ==========
+        function openInExternalBrowser(url) {
+            if (isInstagramBrowser()) {
+                // Trigger Instagram's "Leave Instagram?" prompt
+                const externalLink = document.createElement('a');
+                externalLink.href = url;
+                externalLink.target = '_blank';
+                externalLink.rel = 'noopener noreferrer';
+                externalLink.style.display = 'none';
+                document.body.appendChild(externalLink);
+                externalLink.click();
+                document.body.removeChild(externalLink);
+                
+                // Block navigation inside Instagram browser
+                return false;
+            }
+            // Normal navigation for non-Instagram browsers
+            window.location.href = url;
+            return true;
+        }
+
+        // ========== HANDLE CARD CLICKS ==========
+        function handleCardClick(url) {
+            if (url) {
+                openInExternalBrowser(url);
+            }
+        }
+
+        // ========== SETUP CLICK HANDLERS ==========
+        function setupCards() {
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const url = card.getAttribute('data-url');
+                if (url) {
+                    // Remove existing listeners to avoid duplicates
+                    card.removeEventListener('click', function() {});
+                    card.addEventListener('click', function(e) {
+                        // Prevent any default behavior
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Add visual feedback
+                        this.style.transform = 'scale(0.98)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                        
+                        // Open in external browser
+                        openInExternalBrowser(url);
+                        return false;
+                    });
+                }
+            });
+        }
+
+        // ========== ALSO CATCH ANY LINK CLICKS ==========
+        function interceptAllLinks() {
+            document.addEventListener('click', function(e) {
+                let link = e.target.closest('a');
+                if (link && link.href && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+                    e.preventDefault();
+                    openInExternalBrowser(link.href);
+                    return false;
+                }
+            });
+        }
+
+        // ========== SHOW DEBUG INFO (Optional - Remove in production) ==========
+        function showDebugInfo() {
+            if (isInstagramBrowser()) {
+                console.log('🔍 Instagram browser detected - Links will open externally');
+            } else {
+                console.log('✅ Normal browser - Links work normally');
+            }
+        }
+
+        // ========== INITIALIZE EVERYTHING ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            setupCards();
+            interceptAllLinks();
+            showDebugInfo();
+        });
+    </script>
 </body>
-</html>
+                    </html>
