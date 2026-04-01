@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     min-height: 100vh;
     padding: 20px;
@@ -17,11 +17,9 @@ body {
     padding: 20px 0;
 }
 
-/* Header Styles */
 .header {
     text-align: center;
     margin-bottom: 30px;
-    animation: fadeInDown 0.8s ease;
 }
 
 .logo {
@@ -43,7 +41,6 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: white;
-    letter-spacing: 1px;
 }
 
 .tagline {
@@ -51,7 +48,6 @@ body {
     font-size: 14px;
 }
 
-/* Card Styles */
 .card {
     background: white;
     border-radius: 28px;
@@ -59,22 +55,19 @@ body {
     margin-bottom: 25px;
     text-align: center;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: fadeInUp 0.8s ease;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+.card:active {
+    transform: scale(0.98);
 }
 
 .card-movies {
-    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
     border-bottom: 4px solid #e74c3c;
 }
 
 .card-stories {
-    background: linear-gradient(135deg, #fff 0%, #fef9e6 100%);
     border-bottom: 4px solid #f39c12;
 }
 
@@ -87,22 +80,14 @@ body {
     font-size: 28px;
     font-weight: 800;
     margin-bottom: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 
 .card-movies .card-title {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: #e74c3c;
 }
 
 .card-stories .card-title {
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
+    color: #f39c12;
 }
 
 .card-description {
@@ -112,7 +97,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Features */
 .features {
     display: flex;
     flex-wrap: wrap;
@@ -127,15 +111,10 @@ body {
     border-radius: 20px;
     font-size: 12px;
     color: #555;
-    font-weight: 500;
 }
 
-/* Button Styles */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    display: inline-block;
     width: 100%;
     padding: 16px 24px;
     font-size: 18px;
@@ -143,35 +122,26 @@ body {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
     font-family: inherit;
-    background: #333;
     color: white;
+    transition: transform 0.2s ease;
 }
 
 .btn-primary {
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-}
-
-.btn-primary:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
 }
 
 .btn-secondary {
     background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
 }
 
-.btn-secondary:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+.btn:active {
+    transform: scale(0.98);
 }
 
 .external-icon {
     font-size: 14px;
-    opacity: 0.8;
+    margin-left: 6px;
 }
 
 .btn-note {
@@ -180,58 +150,13 @@ body {
     margin-top: 10px;
 }
 
-/* Footer & Warning */
-.info-footer {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.browser-warning {
-    background: rgba(255, 193, 7, 0.95);
-    color: #856404;
-    padding: 15px 20px;
-    border-radius: 16px;
-    font-size: 13px;
-    margin-bottom: 20px;
-    animation: shake 0.5s ease;
-}
-
 .footer-text {
+    text-align: center;
     color: rgba(255, 255, 255, 0.5);
     font-size: 11px;
-    line-height: 1.5;
+    margin-top: 20px;
 }
 
-/* Animations */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-/* Mobile Responsive */
 @media (max-width: 480px) {
     body {
         padding: 12px;
@@ -248,27 +173,5 @@ body {
     .btn {
         padding: 14px 20px;
         font-size: 16px;
-    }
-    
-    .features {
-        gap: 8px;
-    }
-    
-    .feature {
-        font-size: 11px;
-        padding: 5px 12px;
-    }
-}
-
-/* Touch Device Optimizations */
-@media (hover: hover) {
-    .btn:hover {
-        transform: scale(1.02);
-    }
-}
-
-@media (hover: none) {
-    .btn:active {
-        transform: scale(0.98);
     }
 }
