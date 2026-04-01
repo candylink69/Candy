@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .redirect-card {
+            background: white;
+            border-radius: 28px;
+            padding: 40px 30px;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+            animation: loading 2s ease forwards;
+        }
+        
+        .manual-link {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .manual-link a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-card">
+        <div class="icon">🚀</div>
+        <h2>Opening External Site</h2>
+        <p>You're being redirected to your default browser<br>for the best experience.</p>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+        <div class="manual-link">
+            If not redirected, <a href="#" id="manualRedirect">click here</a>
+        </div>
+    </div>
+
+    <script>
+        // Get target URL from query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        let targetUrl = urlParams.get('to');
+        const site = urlParams.get('site');
+        
+        // Decode URL if needed
+        if (targetUrl) {
+            targetUrl = decodeURIComponent(targetUrl);
+        } else {
+            // Fallback URLs
+            if (site === 'candylink') {
+                targetUrl = 'https://candylink69.vercel.app';
+            } else if (site === 'antarvasna') {
+                targetUrl = 'https://antarvasna69.vercel.app';
+            } else {
+                targetUrl = 'https://candylink69.vercel.app';
+            }
+        }
+        
+        // ========== INSTAGRAM DETECTION ==========
+        function isInstagramBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return ua.includes('Instagram') || 
+                   ua.includes('FBAV') ||
+                   ua.includes('FBAN') ||
+                   ua.includes('FBIOS') ||
+                   (window.top !== window.self && document.referrer.includes('instagram'));
+        }
+        
+        // ========== FORCE EXTERNAL OPENING ==========
+        function openExternal(url) {
+            // Method 1: Create and click link
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Method 2: Fallback
+            setTimeout(() => {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }, 200);
+        }
+        
+        // ========== REDIRECT WITH DELAY ==========
+        setTimeout(() => {
+            if (isInstagramBrowser()) {
+                // In Instagram browser - force external
+                openExternal(targetUrl);
+            } else {
+                // In normal browser - direct redirect
+                window.location.href = targetUrl;
+            }
+        }, 800);
+        
+        // Manual redirect fallback
+        document.getElementById('manualRedirect').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (isInstagramBrowser()) {
+                openExternal(targetUrl);
+            } else {
+                window.location.href = targetUrl;
+            }
+        });
+        
+        // Also try immediate redirect
+        setTimeout(() => {
+            if (isInstagramBrowser()) {
+                openExternal(targetUrl);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
