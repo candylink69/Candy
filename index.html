@@ -164,6 +164,18 @@
             font-size: 11px;
             margin-top: 20px;
         }
+
+        /* Telegram/Instagram warning (optional - appears only if in-app browser detected) */
+        .browser-warning {
+            background: rgba(0,0,0,0.8);
+            color: #ffaa00;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -173,6 +185,11 @@
                 <span class="logo-icon">🎬</span>
                 <span class="logo-text">Entertainment Hub</span>
             </div>
+        </div>
+
+        <!-- Telegram/Instagram warning message (shown only when needed) -->
+        <div id="browserWarning" class="browser-warning">
+            ⚠️ आप Telegram/Instagram ब्राउज़र में हैं। क्लिक करने पर लिंक बाहरी ब्राउज़र में खुलेगा।
         </div>
 
         <!-- CandyLink69 Card -->
@@ -213,68 +230,110 @@
             </div>
         </div>
     </div>
-<script>
-    // 1. DETECTION LOGIC
-    function getInAppType() {
-        const ua = navigator.userAgent || navigator.vendor || window.opera;
-        if (ua.includes('Telegram')) return 'telegram';
-        if (ua.includes('Instagram') || ua.includes('FBAV') || ua.includes('FBAN')) return 'fb_insta';
-        return 'normal';
-    }
 
-    // 2. EXTERNAL BROWSER HANDLER
-    function openInExternalBrowser(url) {
-        const type = getInAppType();
-        const cleanUrl = url.replace(/^https?:\/\//, '');
+    <script>
+        // ========== DETECT IN-APP BROWSER (Instagram + Telegram) ==========
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            // Instagram, Facebook, Telegram, Snapchat, etc.
+            const patterns = /Instagram|FBAN|FBAV|Telegram|TelegramBot|TelegramWeb|Snapchat|Twitter|LinkedIn|Messenger/i;
+            return patterns.test(ua);
+        }
 
-        if (type === 'telegram') {
-            // Android Telegram Force Open
-            if (/Android/i.test(navigator.userAgent)) {
-                window.location.href = 'intent://' + cleanUrl + '#Intent;scheme=https;action=android.intent.action.VIEW;end';
-            } else {
-                // iOS Telegram Force Open
-                window.location.href = 'x-safari-https://' + cleanUrl;
+        // ========== OPEN IN EXTERNAL BROWSER (Forces new tab/window) ==========
+        function openInExternalBrowser(url) {
+            if (isInAppBrowser()) {
+                // Create a temporary anchor element to trigger external browser prompt
+                const externalLink = document.createElement('a');
+                externalLink.href = url;
+                externalLink.target = '_blank';
+                externalLink.rel = 'noopener noreferrer';
+                externalLink.style.display = 'none';
+                document.body.appendChild(externalLink);
+                externalLink.click();
+                document.body.removeChild(externalLink);
+                return false; // Prevent default navigation inside the app
             }
-        } 
-        else if (type === 'fb_insta') {
-            // Tera purana working Instagram logic
-            const externalLink = document.createElement('a');
-            externalLink.href = url;
-            externalLink.target = '_blank';
-            document.body.appendChild(externalLink);
-            externalLink.click();
-            document.body.removeChild(externalLink);
-        } 
-        else {
-            // Normal Browser
+            // Normal browser environment
             window.location.href = url;
+            return true;
         }
-    }
 
-    // 3. CARD CLICKS SETUP
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.card');
-        
-        cards.forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                const url = this.getAttribute('data-url');
-                
-                // Visual Feedback
-                this.style.transform = 'scale(0.96)';
-                setTimeout(() => this.style.transform = '', 150);
-                
-                openInExternalBrowser(url);
+        // ========== SHOW/HIDE WARNING MESSAGE ==========
+        function showWarningIfNeeded() {
+            const warningDiv = document.getElementById('browserWarning');
+            if (warningDiv && isInAppBrowser()) {
+                warningDiv.style.display = 'block';
+                // Auto hide after 4 seconds
+                setTimeout(() => {
+                    warningDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        warningDiv.style.display = 'none';
+                    }, 500);
+                }, 4000);
+            }
+        }
+
+        // ========== SETUP CARD CLICK HANDLERS ==========
+        function setupCards() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const url = card.getAttribute('data-url');
+                if (url) {
+                    // Remove any existing listeners to avoid duplicates
+                    card.removeEventListener('click', handleCardClick);
+                    card.addEventListener('click', handleCardClick);
+                    
+                    // Store the URL on the card for the handler
+                    card.clickUrl = url;
+                }
             });
-        });
-
-        // Agar user page par kahi bhi click kare (Telegram Specific Fix)
-        if (getInAppType() === 'telegram') {
-            document.body.addEventListener('touchstart', function() {
-                console.log("Telegram session active - Ready for external jump");
-            }, {once: true});
         }
-    });
-</script>
+
+        function handleCardClick(event) {
+            const card = event.currentTarget;
+            const url = card.clickUrl;
+            if (!url) return;
+            
+            // Visual feedback
+            card.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                card.style.transform = '';
+            }, 150);
+            
+            // Prevent default if it's a link inside
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Open in external browser
+            openInExternalBrowser(url);
+        }
+
+        // ========== INTERCEPT ALL ANCHOR TAGS (just in case) ==========
+        function interceptAllLinks() {
+            document.addEventListener('click', function(e) {
+                let link = e.target.closest('a');
+                if (link && link.href && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+                    e.preventDefault();
+                    openInExternalBrowser(link.href);
+                    return false;
+                }
+            });
+        }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            setupCards();
+            interceptAllLinks();
+            showWarningIfNeeded();
+            
+            // Optional: log for debugging
+            if (isInAppBrowser()) {
+                console.log('⚠️ In-app browser detected (Telegram/Instagram). Links will open externally.');
+            } else {
+                console.log('✅ Normal browser detected.');
+            }
+        });
+    </script>
 </body>
-                    </html>
+</html>
