@@ -213,101 +213,68 @@
             </div>
         </div>
     </div>
+<script>
+    // 1. DETECTION LOGIC
+    function getInAppType() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera;
+        if (ua.includes('Telegram')) return 'telegram';
+        if (ua.includes('Instagram') || ua.includes('FBAV') || ua.includes('FBAN')) return 'fb_insta';
+        return 'normal';
+    }
 
-    <script>
-        // ========== INSTAGRAM BROWSER DETECTION (Exactly like your working system) ==========
-        function isInstagramBrowser() {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            // Instagram in-app browser detection - clean and reliable
-            return ua.includes('Instagram') || 
-                   ua.includes('FBAV') ||    // Facebook Android
-                   ua.includes('FBAN') ||    // Facebook app
-                   (window.top !== window.self && document.referrer.includes('instagram')); // Instagram webview
-        }
+    // 2. EXTERNAL BROWSER HANDLER
+    function openInExternalBrowser(url) {
+        const type = getInAppType();
+        const cleanUrl = url.replace(/^https?:\/\//, '');
 
-        // ========== EXTERNAL BROWSER HANDLER (Exactly like your working system) ==========
-        function openInExternalBrowser(url) {
-            if (isInstagramBrowser()) {
-                // Trigger Instagram's "Leave Instagram?" prompt
-                const externalLink = document.createElement('a');
-                externalLink.href = url;
-                externalLink.target = '_blank';
-                externalLink.rel = 'noopener noreferrer';
-                externalLink.style.display = 'none';
-                document.body.appendChild(externalLink);
-                externalLink.click();
-                document.body.removeChild(externalLink);
-                
-                // Block navigation inside Instagram browser
-                return false;
-            }
-            // Normal navigation for non-Instagram browsers
-            window.location.href = url;
-            return true;
-        }
-
-        // ========== HANDLE CARD CLICKS ==========
-        function handleCardClick(url) {
-            if (url) {
-                openInExternalBrowser(url);
-            }
-        }
-
-        // ========== SETUP CLICK HANDLERS ==========
-        function setupCards() {
-            const cards = document.querySelectorAll('.card');
-            
-            cards.forEach(card => {
-                const url = card.getAttribute('data-url');
-                if (url) {
-                    // Remove existing listeners to avoid duplicates
-                    card.removeEventListener('click', function() {});
-                    card.addEventListener('click', function(e) {
-                        // Prevent any default behavior
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        // Add visual feedback
-                        this.style.transform = 'scale(0.98)';
-                        setTimeout(() => {
-                            this.style.transform = '';
-                        }, 150);
-                        
-                        // Open in external browser
-                        openInExternalBrowser(url);
-                        return false;
-                    });
-                }
-            });
-        }
-
-        // ========== ALSO CATCH ANY LINK CLICKS ==========
-        function interceptAllLinks() {
-            document.addEventListener('click', function(e) {
-                let link = e.target.closest('a');
-                if (link && link.href && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
-                    e.preventDefault();
-                    openInExternalBrowser(link.href);
-                    return false;
-                }
-            });
-        }
-
-        // ========== SHOW DEBUG INFO (Optional - Remove in production) ==========
-        function showDebugInfo() {
-            if (isInstagramBrowser()) {
-                console.log('🔍 Instagram browser detected - Links will open externally');
+        if (type === 'telegram') {
+            // Android Telegram Force Open
+            if (/Android/i.test(navigator.userAgent)) {
+                window.location.href = 'intent://' + cleanUrl + '#Intent;scheme=https;action=android.intent.action.VIEW;end';
             } else {
-                console.log('✅ Normal browser - Links work normally');
+                // iOS Telegram Force Open
+                window.location.href = 'x-safari-https://' + cleanUrl;
             }
+        } 
+        else if (type === 'fb_insta') {
+            // Tera purana working Instagram logic
+            const externalLink = document.createElement('a');
+            externalLink.href = url;
+            externalLink.target = '_blank';
+            document.body.appendChild(externalLink);
+            externalLink.click();
+            document.body.removeChild(externalLink);
+        } 
+        else {
+            // Normal Browser
+            window.location.href = url;
         }
+    }
 
-        // ========== INITIALIZE EVERYTHING ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            setupCards();
-            interceptAllLinks();
-            showDebugInfo();
+    // 3. CARD CLICKS SETUP
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('data-url');
+                
+                // Visual Feedback
+                this.style.transform = 'scale(0.96)';
+                setTimeout(() => this.style.transform = '', 150);
+                
+                openInExternalBrowser(url);
+            });
         });
-    </script>
+
+        // Agar user page par kahi bhi click kare (Telegram Specific Fix)
+        if (getInAppType() === 'telegram') {
+            document.body.addEventListener('touchstart', function() {
+                console.log("Telegram session active - Ready for external jump");
+            }, {once: true});
+        }
+    });
+</script>
 </body>
                     </html>
